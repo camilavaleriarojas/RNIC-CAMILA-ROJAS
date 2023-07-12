@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -58,6 +58,26 @@ function Section({children, title}: SectionProps): JSX.Element {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const pokemonApi = async () => {
+    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/squirtle';
+    try {
+      const response = await fetch(apiUrl)
+  
+      if (!response.ok) {
+        throw new Error (`Request failed with status ${response.status}`)
+      }
+      const json = await response.json()
+      console.log('Pokemon name: ', json.name)
+    }
+    catch(error) {
+      console.log(error)
+    }
+  }
+  
+  useEffect(() => {
+    pokemonApi()
+  }, [])
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -95,6 +115,7 @@ function App(): JSX.Element {
     </SafeAreaView>
   );
 }
+
 
 const styles = StyleSheet.create({
   sectionContainer: {
