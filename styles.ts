@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { darkContent, isAndroid, lightContent } from "./src/constants/themes";
 
 const styles = StyleSheet.create({
