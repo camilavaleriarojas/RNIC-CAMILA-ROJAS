@@ -1,17 +1,18 @@
 import React, {useRef, useState} from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {FormTaskProps} from '../../types/types';
+import styles from './styles';
 
 const FormTask = (props: FormTaskProps) => {
   const {data, addTask} = props;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const descriptionUsingRef = useRef<TextInput>(null);
 
   const onSubmit = () => {
     addTask({
@@ -32,13 +33,17 @@ const FormTask = (props: FormTaskProps) => {
         style={styles.input}
         value={title}
         onChangeText={value => setTitle(value)}
-        // returnKeyType="next"
+        returnKeyType="next"
+        onSubmitEditing={() => {
+          descriptionUsingRef.current?.focus();
+        }}
       />
       <TextInput
         placeholder="Descripcion"
         style={styles.input}
         value={description}
         onChangeText={value => setDescription(value)}
+        ref={descriptionUsingRef}
       />
       <TouchableOpacity onPress={onSubmit}>
         <Text style={styles.button}>Agregar tarea</Text>
@@ -47,27 +52,5 @@ const FormTask = (props: FormTaskProps) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
-  input: {
-    marginBottom: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    width: 300,
-  },
-  title: {
-    fontSize: 20,
-    textAlign: 'center',
-  },
-  button: {
-    fontSize: 20,
-    textAlign: 'center',
-    backgroundColor: 'coral',
-    padding: 10,
-    color: '#fff'
-  },
-});
 
 export default FormTask;
