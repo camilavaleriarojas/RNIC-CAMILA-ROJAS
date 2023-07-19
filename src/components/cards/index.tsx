@@ -1,18 +1,22 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CardProps } from "../../types/types";
 
 
-const Card = () =>{
-    // const { data } = props;
-    // const {title, description, toDo} = data;
+const Card = (props: CardProps) =>{
+    const { data } = props;
+    const { title, description } = data;
+
+    const [todo, setTodo] = useState(false)
 
     return (
-        <View style={styles.container}>
-            <Text>{'Title '}</Text>
-            <Text>{'Description '}</Text>
-            <Text>{'Finished '}</Text>
+       <TouchableOpacity onPress={() => setTodo(!todo) }>
+         <View style={styles.container}>
+            <Text style={styles.tasks}>{title}</Text>
+            <Text style={styles.tasks}>{description}</Text>
+            <Text style={styles.tasks}>{!todo ? 'No completado' : 'Completado'}</Text>
         </View>
+       </TouchableOpacity>
     )
 }
 
@@ -20,6 +24,10 @@ export default Card;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'yellow'
+        backgroundColor: '#7654',
+        margin: 20,
+    },
+    tasks: {
+        margin: 10
     }
 })
