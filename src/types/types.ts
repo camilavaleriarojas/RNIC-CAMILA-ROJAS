@@ -9,7 +9,12 @@ export interface CardProps {
     data: TaskTypes;
 }
 
-export interface FormTaskProps {
-    data: TaskTypes[];
-    addTask: (data: TaskTypes) => void;
+export interface AddTask {
+    title: string;
+    description: string;
 }
+
+export interface FormTaskProps {
+    addTask: (data: AddTask) => void;
+}
+

@@ -21,7 +21,7 @@ import Card from './src/components/cards';
 import {tasks} from './src/constants/task';
 import Header from './src/components/header';
 import FormTask from './src/components/formTask';
-import {TaskTypes} from './src/types/types';
+import { AddTask } from './src/types/types';
 import styles from './styles';
 
 function App(): JSX.Element {
@@ -29,9 +29,14 @@ function App(): JSX.Element {
   const [taskList, setTaskList] = useState(tasks);
   const isAndroid = Platform.OS === 'android';
 
-  const addTask = (task: TaskTypes) => {
-    const updatedTaskList = [...taskList, task];
-    setTaskList(updatedTaskList);
+  const addTask = (task: AddTask) => {
+    const updatedTaskList = {
+      id: taskList.length + 1,
+      title: task.title,
+      description: task.description,
+      todo: false,
+    };
+    setTaskList([...taskList, updatedTaskList]);
   };
 
   useEffect(() => {
@@ -61,7 +66,7 @@ function App(): JSX.Element {
             renderItem={({item}) => <Card data={item} />}
             ListEmptyComponent={emptyData}
           />
-          <FormTask data={taskList} addTask={addTask} />
+          <FormTask addTask={addTask} />
         </SafeAreaView>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

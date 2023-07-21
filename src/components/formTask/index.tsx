@@ -5,21 +5,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {FormTaskProps} from '../../types/types';
+import {AddTask, FormTaskProps} from '../../types/types';
 import styles from './styles';
 
-const FormTask = (props: FormTaskProps) => {
-  const {data, addTask} = props;
+const FormTask = ({addTask}: FormTaskProps) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const descriptionUsingRef = useRef<TextInput>(null);
 
   const onSubmit = () => {
     addTask({
-      id: data.length + 1,
       title: title,
       description: description,
-      todo: false,
     });
     setTitle('')
     setDescription('')
