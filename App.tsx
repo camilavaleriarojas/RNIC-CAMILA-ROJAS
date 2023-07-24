@@ -23,8 +23,13 @@ import Header from './src/components/header';
 import FormTask from './src/components/formTask';
 import { AddTask } from './src/types/types';
 import styles from './styles';
+import RNBootSplash from 'react-native-bootsplash'
 
 function App(): JSX.Element {
+
+  useEffect(() => {
+    RNBootSplash.hide({fade:true})
+  })
   const emptyData = <Text>No existen tareas a realizar</Text>;
   const [taskList, setTaskList] = useState(tasks);
   const isAndroid = Platform.OS === 'android';
