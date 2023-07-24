@@ -17,21 +17,25 @@ const styles = StyleSheet.create({
     },
     tasks: {
         ...commonStyles,
-        padding: 5
+        padding: 5,
+        fontFamily: 'Lato-Regular'
     },
     title: {
         ...commonStyles,
-        fontWeight: '400'
+        fontWeight: '400',
+        fontFamily: 'Lato-Bold'
     },
     completed: {
         ...commonStyles,
         margin: 7,
         color: '#198641',
+        fontFamily: 'Lato-Regular'
     },
     notCompleted: {
         ...commonStyles,
         margin: 7,
-        color: '#f95653'
+        color: '#f95653',
+        fontFamily: 'Lato-Regular'
     }
  
 })
