@@ -5,135 +5,72 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  FlatList,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
   Text,
-  useColorScheme,
-  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  AppState,
+  StatusBar,
 } from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import Card from './src/components/cards';
+import {tasks} from './src/constants/task';
+import Header from './src/components/header';
+import FormTask from './src/components/formTask';
+import { AddTask } from './src/types/types';
+import styles from './styles';
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+  const emptyData = <Text>No existen tareas a realizar</Text>;
+  const [taskList, setTaskList] = useState(tasks);
+  const isAndroid = Platform.OS === 'android';
 
-  const pokemonApi = async () => {
-    const apiUrl = 'https://pokeapi.co/api/v2/pokemon/squirtle';
-    try {
-      const response = await fetch(apiUrl)
-  
-      if (!response.ok) {
-        throw new Error (`Request failed with status ${response.status}`)
-      }
-      const json = await response.json()
-      console.log('Pokemon name: ', json.name)
-    }
-    catch(error) {
-      console.log(error)
-    }
-  }
-  
-  useEffect(() => {
-    pokemonApi()
-  }, [])
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const addTask = (task: AddTask) => {
+    const updatedTaskList = {
+      id: taskList.length + 1,
+      title: task.title,
+      description: task.description,
+      todo: false,
+    };
+    setTaskList([...taskList, updatedTaskList]);
   };
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'background') {
+        return setTaskList([]);
+      }
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardAvoidingView}>
+        <SafeAreaView style={styles.safeArea}>
+          <StatusBar 
+            barStyle={isAndroid ? 'dark-content' : 'light-content'} 
+            backgroundColor={isAndroid ? 'white' : 'black'}
+            />
+          <Header />
+          <FlatList
+            data={taskList}
+            renderItem={({item}) => <Card data={item} />}
+            ListEmptyComponent={emptyData}
+          />
+          <FormTask addTask={addTask} />
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
-
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
