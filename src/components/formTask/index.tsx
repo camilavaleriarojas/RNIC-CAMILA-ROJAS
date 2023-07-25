@@ -23,7 +23,7 @@ const FormTask = ({addTask}: FormTaskProps) => {
       <Input
         placeholder="Tarea"
         value={title}
-        onChangeText={value => setTitle(value)}
+        onChangeText={setTitle}
         returnKeyType="next"
         onSubmitEditing={() => {
           descriptionUsingRef.current?.focus();
@@ -32,8 +32,8 @@ const FormTask = ({addTask}: FormTaskProps) => {
       <Input
         placeholder="Descripcion"
         value={description}
-        onChangeText={value => setDescription(value)}
-        // ref={descriptionUsingRef}
+        onChangeText={setDescription}
+        ref={descriptionUsingRef}
       />
       <TouchableOpacity onPress={onSubmit}>
         <Button>Agregar tarea</Button>

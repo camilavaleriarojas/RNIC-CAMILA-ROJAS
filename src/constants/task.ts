@@ -1,4 +1,4 @@
-import {TaskTypes} from '../types/types'
+import {TaskTypes} from '../types/types';
 
 export const tasks: TaskTypes[] = [
   {
@@ -6,18 +6,21 @@ export const tasks: TaskTypes[] = [
     title: 'Lavar la ropa',
     description: 'Poner el cesto de ropa a lavar',
     todo: false,
+    img: require('../assets/images/ducks.jpeg'),
   },
   {
     id: 2,
     title: 'Cambiar piedras de gatos',
     description: 'Cambiar las piedritas de los gatos',
     todo: true,
+    img: require('../assets/images/meadow.jpeg'),
   },
   {
     id: 3,
     title: 'Cocinar almuerzo semanal',
-    description: 'Cocinar el almuerzo para toda la semana y regrigerar',
+    description: 'Cocinar el almuerzo para toda la semana y refrigerar',
     todo: false,
+    img: require('../assets/images/moon.jpeg'),
   },
   {
     id: 4,
