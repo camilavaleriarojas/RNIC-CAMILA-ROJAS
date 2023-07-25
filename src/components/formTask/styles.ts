@@ -1,39 +1,34 @@
-import { StyleSheet } from "react-native";
-import { darkContent, isAndroid, lightContent } from "../../constants/themes";
+import {theme} from '../../constants/theme';
+import styled from 'styled-components/native';
 
+export const Container = styled.View`
+  margin-top: 10px;
+  padding: 25px 0;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  background-color: #fff;
+`;
 
-const styles = StyleSheet.create({
-    container: {
-      paddingBottom: 25,
-      paddingTop: 28,
-      marginTop: 10,
-      borderTopLeftRadius: 40,
-      borderTopRightRadius: 40,
-      backgroundColor: '#fff'
-    },
-    input: {
-      marginBottom: 6,
-      paddingHorizontal: 40,
-      paddingVertical: 10,
-      borderBottomWidth: 2,
-      borderBottomColor: '#e8e8ed',
-      fontSize: 15
-    },
-    title: {
-      fontSize: 20,
-      textAlign: 'center',
-    },
-    button: {
-      padding: 10,
-      marginTop: 10,
-      marginLeft: 30,
-      marginRight: 30,
-      borderRadius: 20,
-      textAlign: 'center',
-      backgroundColor: isAndroid ? lightContent.neutral : darkContent.secondary,
-      color: '#fff',
-      fontSize: 20
-    },
-  });
+export const Title = styled.TextInput`
+  font-size: 20px;
+  text-align: center;
+`;
 
-export default styles
+export const Input = styled.TextInput`
+  margin-bottom: 6px;
+  padding-left: 30px;
+  border-bottom-width: 2px;
+  border-bottom-color: #e8e8ed;
+  font-size: 18px;
+`;
+
+export const Button = styled.Text`
+  padding: 12px;
+  margin: 10px 30px 0 30px;
+  border-radius: 20px;
+  font-size: 20px;
+  background-color: ${theme.secondary};
+  font-family: 'Lato-Regular';
+  text-align: center;
+  color: #fff;
+`;

@@ -1,16 +1,12 @@
-import React from "react";
-import { Text, View } from "react-native";
-import { styles } from "./styles";
-
+import React from 'react';
+import {Container, Title} from './styles';
 
 const Header = () => {
-
-    return ( 
-        <View style={styles.header}>
-            <Text style={styles.title}>My Tasks</Text>
-        </View>
-    )
-
-}
+  return (
+    <Container>
+      <Title>My Tasks</Title>
+    </Container>
+  );
+};
 
 export default Header;

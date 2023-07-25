@@ -1,12 +1,7 @@
 import React, {useRef, useState} from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {AddTask, FormTaskProps} from '../../types/types';
-import styles from './styles';
+import {TextInput, TouchableOpacity} from 'react-native';
+import {FormTaskProps} from '../../types/types';
+import {Container, Title, Button, Input} from './styles';
 
 const FormTask = ({addTask}: FormTaskProps) => {
   const [title, setTitle] = useState('');
@@ -18,16 +13,15 @@ const FormTask = ({addTask}: FormTaskProps) => {
       title: title,
       description: description,
     });
-    setTitle('')
-    setDescription('')
+    setTitle('');
+    setDescription('');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Agregar tarea</Text>
-      <TextInput
+    <Container>
+      <Title>Agregar tarea</Title>
+      <Input
         placeholder="Tarea"
-        style={styles.input}
         value={title}
         onChangeText={value => setTitle(value)}
         returnKeyType="next"
@@ -35,19 +29,17 @@ const FormTask = ({addTask}: FormTaskProps) => {
           descriptionUsingRef.current?.focus();
         }}
       />
-      <TextInput
+      <Input
         placeholder="Descripcion"
-        style={styles.input}
         value={description}
         onChangeText={value => setDescription(value)}
-        ref={descriptionUsingRef}
+        // ref={descriptionUsingRef}
       />
       <TouchableOpacity onPress={onSubmit}>
-        <Text style={styles.button}>Agregar tarea</Text>
+        <Button>Agregar tarea</Button>
       </TouchableOpacity>
-    </View>
+    </Container>
   );
 };
-
 
 export default FormTask;
