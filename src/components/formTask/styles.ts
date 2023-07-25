@@ -22,13 +22,21 @@ export const Input = styled.TextInput`
   font-size: 18px;
 `;
 
-export const Button = styled.Text`
-  padding: 12px;
-  margin: 10px 30px 0 30px;
-  border-radius: 20px;
+export const TextButton = styled.Text`
   font-size: 20px;
-  background-color: ${theme.secondary};
+  padding-right: 10px;
   font-family: 'Lato-Regular';
   text-align: center;
   color: #fff;
+`;
+
+export const SubmitButton = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: center;
+  background-color: ${theme.secondary};
+  padding: 12px;
+  margin: 10px 40px 0 40px;
+  border-radius: 20px;
 `;

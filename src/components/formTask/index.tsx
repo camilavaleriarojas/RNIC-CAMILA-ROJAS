@@ -1,7 +1,9 @@
 import React, {useRef, useState} from 'react';
-import {TextInput, TouchableOpacity} from 'react-native';
+import {TextInput} from 'react-native';
 import {FormTaskProps} from '../../types/types';
-import {Container, Title, Button, Input} from './styles';
+import {Container, Title, TextButton, Input, SubmitButton} from './styles';
+import Add from '../../assets/icons/plus.svg';
+import {theme} from '../../constants/theme';
 
 const FormTask = ({addTask}: FormTaskProps) => {
   const [title, setTitle] = useState('');
@@ -35,9 +37,10 @@ const FormTask = ({addTask}: FormTaskProps) => {
         onChangeText={setDescription}
         ref={descriptionUsingRef}
       />
-      <TouchableOpacity onPress={onSubmit}>
-        <Button>Agregar tarea</Button>
-      </TouchableOpacity>
+      <SubmitButton onPress={onSubmit}>
+        <TextButton>Agregar tarea</TextButton>
+        <Add stroke={theme.text} />
+      </SubmitButton>
     </Container>
   );
 };
