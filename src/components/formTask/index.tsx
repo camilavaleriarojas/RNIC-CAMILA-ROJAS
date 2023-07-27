@@ -1,12 +1,9 @@
 import React, {useRef, useState} from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {AddTask, FormTaskProps} from '../../types/types';
-import styles from './styles';
+import {TextInput} from 'react-native';
+import {FormTaskProps} from '../../types/types';
+import {Container, Title, TextButton, Input, SubmitButton} from './styles';
+import Add from '../../assets/icons/plus.svg';
+import {theme} from '../../constants/theme';
 
 const FormTask = ({addTask}: FormTaskProps) => {
   const [title, setTitle] = useState('');
@@ -18,36 +15,34 @@ const FormTask = ({addTask}: FormTaskProps) => {
       title: title,
       description: description,
     });
-    setTitle('')
-    setDescription('')
+    setTitle('');
+    setDescription('');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Agregar tarea</Text>
-      <TextInput
+    <Container>
+      <Title>Agregar tarea</Title>
+      <Input
         placeholder="Tarea"
-        style={styles.input}
         value={title}
-        onChangeText={value => setTitle(value)}
+        onChangeText={setTitle}
         returnKeyType="next"
         onSubmitEditing={() => {
           descriptionUsingRef.current?.focus();
         }}
       />
-      <TextInput
+      <Input
         placeholder="Descripcion"
-        style={styles.input}
         value={description}
-        onChangeText={value => setDescription(value)}
+        onChangeText={setDescription}
         ref={descriptionUsingRef}
       />
-      <TouchableOpacity onPress={onSubmit}>
-        <Text style={styles.button}>Agregar tarea</Text>
-      </TouchableOpacity>
-    </View>
+      <SubmitButton onPress={onSubmit}>
+        <TextButton>Agregar tarea</TextButton>
+        <Add stroke={theme.text} />
+      </SubmitButton>
+    </Container>
   );
 };
-
 
 export default FormTask;

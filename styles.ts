@@ -1,14 +1,11 @@
-import { StyleSheet } from "react-native";
-import { darkContent, isAndroid, lightContent } from "./src/constants/themes";
+import {theme} from './src/constants/theme';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-    safeArea: {
-      flex: 1,
-      backgroundColor: isAndroid ? lightContent.background : darkContent.primary,
-    },
-    keyboardAvoidingView: {
-      flex: 1,
-    },
-  });
+export const Main = styled.KeyboardAvoidingView`
+  flex: 1;
+`;
 
-export default styles
+export const Component = styled.SafeAreaView`
+  flex: 1;
+  background-color: ${theme.primary};
+`;

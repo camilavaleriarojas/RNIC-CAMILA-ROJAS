@@ -1,39 +1,58 @@
-import { StyleSheet } from "react-native";
-import {lightContent, darkContent, isAndroid} from '../../constants/themes'
+import {theme} from '../../constants/theme';
+import styled from 'styled-components/native';
 
-const commonStyles = {
-    marginTop: 10,
-    marginLeft: 20,
-    fontSize: 17,
-    padding: 5,
-    color: isAndroid ? lightContent.secondaryText : darkContent.text,
-  };
+export const Container = styled.View`
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 5px;
+  font-size: 15px;
+  background-color: ${theme.secondary};
+  border-radius: 15px;
+  min-width: 200px;
+`;
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: isAndroid ? lightContent.secondary : darkContent.secondary,
-        margin: 10,
-        borderRadius: 20
-    },
-    tasks: {
-        ...commonStyles,
-        padding: 5
-    },
-    title: {
-        ...commonStyles,
-        fontWeight: '400'
-    },
-    completed: {
-        ...commonStyles,
-        margin: 7,
-        color: '#198641',
-    },
-    notCompleted: {
-        ...commonStyles,
-        margin: 7,
-        color: '#f95653'
-    }
- 
-})
+export const Div = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 
-export default styles
+export const Icons = styled.View`
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+  gap: 10px;
+`;
+
+export const Description = styled.Text`
+  margin: 0 0 5px 10px;
+  padding-left: 10px;
+  font-size: 17px;
+  font-family: 'Lato-Regular';
+  color: ${theme.text};
+`;
+
+export const State = styled.Text`
+  margin-right: 10px;
+  padding: 5px;
+  display: flex;
+  align-self: flex-end;
+`;
+
+export const Title = styled.Text`
+  margin: 8px 15px;
+  padding: 5px;
+  font-weight: 400;
+  font-size: 17px;
+  font-family: 'Lato-Bold';
+  color: ${theme.text};
+`;
+
+export const Image = styled.Image`
+  width: 92%;
+  height: 70px;
+  margin: 15px 0;
+  border-radius: 15px;
+  align-self: center;
+`;

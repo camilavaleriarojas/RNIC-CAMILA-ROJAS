@@ -1,16 +1,15 @@
-import { StyleSheet } from "react-native";
-import {lightContent, darkContent, isAndroid} from '../../constants/themes'
+import styled from 'styled-components/native';
+import {theme} from '../../constants/theme';
 
-export const styles = StyleSheet.create({
-    header: {
-        backgroundColor: isAndroid ? lightContent.primary : darkContent.primary,
-        height: 80,
-        paddingTop: 25
-    },
-    title: {
-        color: isAndroid ? lightContent.secondary : darkContent.text,
-        fontSize: 20,
-        fontWeight: '400',
-        textAlign: 'center',
-    }
-})
+export const Container = styled.View`
+  height: 80px;
+  padding-top: 25px;
+  background-color: ${theme.primary};
+`;
+
+export const Title = styled.Text`
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  color: ${theme.text};
+`;

@@ -8,11 +8,9 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
-  SafeAreaView,
   Text,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
   Platform,
   AppState,
   StatusBar,
@@ -21,10 +19,15 @@ import Card from './src/components/cards';
 import {tasks} from './src/constants/task';
 import Header from './src/components/header';
 import FormTask from './src/components/formTask';
-import { AddTask } from './src/types/types';
-import styles from './styles';
+import {AddTask} from './src/types/types';
+import {Main, Component} from './styles';
+import RNBootSplash from 'react-native-bootsplash';
 
 function App(): JSX.Element {
+  useEffect(() => {
+    RNBootSplash.hide({fade: true});
+  });
+
   const emptyData = <Text>No existen tareas a realizar</Text>;
   const [taskList, setTaskList] = useState(tasks);
   const isAndroid = Platform.OS === 'android';
@@ -52,14 +55,12 @@ function App(): JSX.Element {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardAvoidingView}>
-        <SafeAreaView style={styles.safeArea}>
-          <StatusBar 
-            barStyle={isAndroid ? 'dark-content' : 'light-content'} 
+      <Main behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <Component>
+          <StatusBar
+            barStyle={isAndroid ? 'dark-content' : 'light-content'}
             backgroundColor={isAndroid ? 'white' : 'black'}
-            />
+          />
           <Header />
           <FlatList
             data={taskList}
@@ -67,8 +68,8 @@ function App(): JSX.Element {
             ListEmptyComponent={emptyData}
           />
           <FormTask addTask={addTask} />
-        </SafeAreaView>
-      </KeyboardAvoidingView>
+        </Component>
+      </Main>
     </TouchableWithoutFeedback>
   );
 }
