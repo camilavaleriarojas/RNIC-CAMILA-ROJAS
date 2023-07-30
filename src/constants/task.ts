@@ -1,4 +1,4 @@
-import {TaskTypes} from '../types/types';
+import {TaskTypes} from '../types';
 
 export const tasks: TaskTypes[] = [
   {

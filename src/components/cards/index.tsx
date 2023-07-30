@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native';
-import {CardProps} from '../../types/types';
+import {CardProps} from '../../types';
 import {
   Container,
   Div,

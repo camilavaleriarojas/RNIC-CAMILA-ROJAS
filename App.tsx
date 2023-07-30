@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {
   FlatList,
   Text,
@@ -19,9 +19,19 @@ import Card from './src/components/cards';
 import {tasks} from './src/constants/task';
 import Header from './src/components/header';
 import FormTask from './src/components/formTask';
-import {AddTask} from './src/types/types';
+import {AddTask, TaskTypes} from './src/types';
 import {Main, Component} from './styles';
 import RNBootSplash from 'react-native-bootsplash';
+
+interface ContextType {
+  taskList: TaskTypes[];
+  setTaskList: (data: TaskTypes[]) => void;
+}
+
+export const ContextProvider = createContext<ContextType>({
+  taskList: tasks,
+  setTaskList: () => undefined,
+});
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -31,6 +41,11 @@ function App(): JSX.Element {
   const emptyData = <Text>No existen tareas a realizar</Text>;
   const [taskList, setTaskList] = useState(tasks);
   const isAndroid = Platform.OS === 'android';
+
+  const Values = {
+    taskList,
+    setTaskList,
+  };
 
   const addTask = (task: AddTask) => {
     const updatedTaskList = {
@@ -54,23 +69,25 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Main behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Component>
-          <StatusBar
-            barStyle={isAndroid ? 'dark-content' : 'light-content'}
-            backgroundColor={isAndroid ? 'white' : 'black'}
-          />
-          <Header />
-          <FlatList
-            data={taskList}
-            renderItem={({item}) => <Card data={item} />}
-            ListEmptyComponent={emptyData}
-          />
-          <FormTask addTask={addTask} />
-        </Component>
-      </Main>
-    </TouchableWithoutFeedback>
+    <ContextProvider.Provider value={Values}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Main behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <Component>
+            <StatusBar
+              barStyle={isAndroid ? 'dark-content' : 'light-content'}
+              backgroundColor={isAndroid ? 'white' : 'black'}
+            />
+            <Header />
+            <FlatList
+              data={taskList}
+              renderItem={({item}) => <Card data={item} />}
+              ListEmptyComponent={emptyData}
+            />
+            <FormTask addTask={addTask} />
+          </Component>
+        </Main>
+      </TouchableWithoutFeedback>
+    </ContextProvider.Provider>
   );
 }
 
