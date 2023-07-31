@@ -4,6 +4,7 @@ export interface TaskTypes {
   description: string;
   todo?: boolean;
   img?: string;
+  date?: Date | undefined;
 }
 
 export interface CardProps {
