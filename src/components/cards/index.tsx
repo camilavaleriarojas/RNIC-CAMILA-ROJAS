@@ -14,11 +14,12 @@ import Delete from '../../assets/icons/x.svg';
 import Edit from '../../assets/icons/edit.svg';
 import Check from '../../assets/icons/check.svg';
 import {theme} from '../../constants/theme';
+import {Routes} from '../../types/enums/routes';
 
 const Card = (props: CardProps) => {
-  const {data} = props;
+  const {data, navigation} = props;
   const {title, description, img} = data;
-
+  const id = data.id;
   const [todo, setTodo] = useState(false);
 
   return (
@@ -26,7 +27,12 @@ const Card = (props: CardProps) => {
       <Div>
         <Title>{title}</Title>
         <Icons>
-          <Edit stroke={theme.text} />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(Routes.EDIT_TASK, {id: id});
+            }}>
+            <Edit stroke={theme.text} />
+          </TouchableOpacity>
           <Delete stroke={theme.text} />
         </Icons>
       </Div>

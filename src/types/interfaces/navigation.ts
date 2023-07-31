@@ -5,4 +5,5 @@ export type StackTabParams = {
   [Routes.ADD_TASK]: undefined;
   [Routes.TAB_NAVIGATOR]: undefined;
   [Routes.EDIT_TASK]: undefined;
+  [Routes.STACK]: undefined;
 };

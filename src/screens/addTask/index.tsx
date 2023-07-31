@@ -1,7 +1,8 @@
 import React from 'react';
+import FormTask from '../../components/formTask';
 
 const AddTask = () => {
-  return <></>;
+  return <FormTask isEditingTask={false} />;
 };
 
 export default AddTask;
