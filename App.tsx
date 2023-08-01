@@ -18,6 +18,8 @@ import {TaskTypes} from './src/types';
 import {Main, Component} from './styles';
 import RNBootSplash from 'react-native-bootsplash';
 import Navigator from './src/navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Keys} from './src/types/enums/routes';
 
 interface ContextType {
   taskList: TaskTypes[];
@@ -30,10 +32,6 @@ export const ContextProvider = createContext<ContextType>({
 });
 
 function App(): JSX.Element {
-  useEffect(() => {
-    RNBootSplash.hide({fade: true});
-  });
-
   const [taskList, setTaskList] = useState(tasks);
   const isAndroid = Platform.OS === 'android';
 
@@ -41,6 +39,22 @@ function App(): JSX.Element {
     taskList,
     setTaskList,
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedTaskList = await AsyncStorage.getItem(Keys.TASKS_KEY);
+        if (storedTaskList) {
+          setTaskList(JSON.parse(storedTaskList));
+        }
+        RNBootSplash.hide({fade: true});
+      } catch (error) {
+        console.log('Error fetching data from AsyncStorage:', error);
+        RNBootSplash.hide({fade: true});
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <ContextProvider.Provider value={Values}>

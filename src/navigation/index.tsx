@@ -2,17 +2,18 @@ import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import TabNavigator from './tab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Keys} from '../types/enums/routes';
 
 const Navigator = () => {
   const [isReady, setIsReady] = React.useState(false);
   const [initialState, setInitialState] = React.useState();
 
-  const PERSISTENCE_KEY = 'NAVIGATION_STATE';
-
   useEffect(() => {
     const restoreState = async () => {
       try {
-        const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
+        const savedStateString = await AsyncStorage.getItem(
+          Keys.PERSISTENCE_KEY,
+        );
         const state = savedStateString
           ? JSON.parse(savedStateString)
           : undefined;
@@ -38,7 +39,7 @@ const Navigator = () => {
     <NavigationContainer
       initialState={initialState}
       onStateChange={state =>
-        AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+        AsyncStorage.setItem(Keys.PERSISTENCE_KEY, JSON.stringify(state))
       }>
       <TabNavigator />
     </NavigationContainer>

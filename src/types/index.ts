@@ -4,7 +4,7 @@ export interface TaskTypes {
   description: string;
   todo?: boolean;
   img?: string;
-  date?: Date | undefined;
+  taskDate?: string | undefined;
 }
 
 export interface CardProps {
@@ -16,6 +16,7 @@ export interface AddTaskFormProps {
   id?: number;
   title: string;
   description: string;
+  taskDate?: string | undefined;
 }
 
 export interface FormTaskProps {

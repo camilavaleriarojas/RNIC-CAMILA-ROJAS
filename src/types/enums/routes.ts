@@ -5,3 +5,8 @@ export enum Routes {
   TAB_NAVIGATOR = 'TAB_NAVIGATOR',
   STACK = 'STACK',
 }
+
+export enum Keys {
+  TASKS_KEY = 'TASKS_KEY',
+  PERSISTENCE_KEY = 'PERSISTENCE_KEY',
+}

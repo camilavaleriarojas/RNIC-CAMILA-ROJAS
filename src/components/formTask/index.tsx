@@ -32,7 +32,7 @@ const FormTask = ({id, isEditingTask}: FormTaskProps) => {
   const {taskList, setTaskList} = useContext(ContextProvider);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [date, setDate] = useState(new Date() || undefined);
+  const [taskDate, setTaskDate] = useState(new Date() || undefined);
   const [open, setOpen] = useState(false);
   const descriptionUsingRef = useRef<TextInput>(null);
   const selectedTask = taskList?.filter(item => item.id === id)[0];
@@ -52,9 +52,10 @@ const FormTask = ({id, isEditingTask}: FormTaskProps) => {
     if (isEditingTask && selectedTask) {
       setTitle(selectedTask.title);
       setDescription(selectedTask.description);
-      if (selectedTask.date) {
-        setDate(selectedTask?.date);
-      }
+      setTaskDate(
+        selectedTask.taskDate ? new Date(selectedTask.taskDate) : new Date(),
+      );
+      console.log(selectedTask.taskDate);
     }
   }, [isEditingTask, selectedTask]);
 
@@ -63,7 +64,7 @@ const FormTask = ({id, isEditingTask}: FormTaskProps) => {
       id: taskList.length + 1,
       title: task.title,
       description: task.description,
-      date: date,
+      taskDate: taskDate.toDateString(),
       todo: false,
     };
     setTaskList([...taskList, updatedTaskList]);
@@ -73,7 +74,7 @@ const FormTask = ({id, isEditingTask}: FormTaskProps) => {
     const newTask = {
       title: title,
       description: description,
-      date: date,
+      taskDate: taskDate.toDateString(),
     };
     if (isEditingTask) {
       editData(newTask);
@@ -81,6 +82,7 @@ const FormTask = ({id, isEditingTask}: FormTaskProps) => {
       addTask(newTask);
       setTitle('');
       setDescription('');
+      setTaskDate(new Date());
     }
     Keyboard.dismiss();
     navigation.goBack();
@@ -144,16 +146,18 @@ const FormTask = ({id, isEditingTask}: FormTaskProps) => {
           <DatePicker
             modal
             open={open}
-            date={date}
+            date={taskDate}
             onConfirm={date => {
               setOpen(false);
-              setDate(new Date(date));
+              setTaskDate(new Date(date));
             }}
             onCancel={() => {
               setOpen(false);
             }}
           />
-          <DateText>{date ? date.toDateString() : 'Agregar fecha'}</DateText>
+          <DateText>
+            {selectedTask.taskDate ? selectedTask.taskDate : 'Agregar Fecha'}
+          </DateText>
         </DatePickerContainer>
         <SubmitButton onPress={onSubmit}>
           {isEditingTask ? (
