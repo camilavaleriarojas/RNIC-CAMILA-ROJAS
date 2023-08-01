@@ -2,24 +2,33 @@ import {theme} from '../../constants/theme';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  margin-top: 10px;
-  padding: 25px 0;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+  display: flex;
+  justify-content: center;
+  height: 340px;
+  margin: 15px 20px 0 20px;
+  border-radius: 40px;
   background-color: #fff;
 `;
 
+export const IconContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-content: center;
+  padding-right: 20px;
+`;
+
 export const Title = styled.TextInput`
-  font-size: 20px;
+  font-size: 23px;
   text-align: center;
 `;
 
 export const Input = styled.TextInput`
-  margin-bottom: 6px;
-  padding-left: 30px;
+  margin: 5px;
+  padding-left: 20px;
   border-bottom-width: 2px;
   border-bottom-color: #e8e8ed;
-  font-size: 18px;
+  font-size: 20px;
 `;
 
 export const TextButton = styled.Text`
@@ -33,10 +42,25 @@ export const TextButton = styled.Text`
 export const SubmitButton = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
-  width: 80%;
   justify-content: center;
   background-color: ${theme.secondary};
   padding: 12px;
-  margin: 10px 40px 0 40px;
+  margin: 15px 40px 0 40px;
   border-radius: 20px;
+`;
+
+export const DatePickerTask = styled.TouchableOpacity`
+  padding: 15px 0 0 25px;
+`;
+
+export const DatePickerContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const DateText = styled.TextInput`
+  padding-right: 25px;
+  font-family: 'Lato-Regular';
+  color: ${theme.primary};
 `;

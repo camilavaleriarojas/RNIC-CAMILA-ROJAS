@@ -5,72 +5,72 @@
  * @format
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {
-  FlatList,
-  Text,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  AppState,
   StatusBar,
 } from 'react-native';
-import Card from './src/components/cards';
 import {tasks} from './src/constants/task';
 import Header from './src/components/header';
-import FormTask from './src/components/formTask';
-import {AddTask} from './src/types/types';
+import {TaskTypes} from './src/types';
 import {Main, Component} from './styles';
 import RNBootSplash from 'react-native-bootsplash';
+import Navigator from './src/navigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Keys} from './src/types/enums/routes';
+
+interface ContextType {
+  taskList: TaskTypes[];
+  setTaskList: (data: TaskTypes[]) => void;
+}
+
+export const ContextProvider = createContext<ContextType>({
+  taskList: tasks,
+  setTaskList: () => undefined,
+});
 
 function App(): JSX.Element {
-  useEffect(() => {
-    RNBootSplash.hide({fade: true});
-  });
-
-  const emptyData = <Text>No existen tareas a realizar</Text>;
   const [taskList, setTaskList] = useState(tasks);
   const isAndroid = Platform.OS === 'android';
 
-  const addTask = (task: AddTask) => {
-    const updatedTaskList = {
-      id: taskList.length + 1,
-      title: task.title,
-      description: task.description,
-      todo: false,
-    };
-    setTaskList([...taskList, updatedTaskList]);
+  const Values = {
+    taskList,
+    setTaskList,
   };
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'background') {
-        return setTaskList([]);
+    const fetchData = async () => {
+      try {
+        const storedTaskList = await AsyncStorage.getItem(Keys.TASKS_KEY);
+        if (storedTaskList) {
+          setTaskList(JSON.parse(storedTaskList));
+        }
+        RNBootSplash.hide({fade: true});
+      } catch (error) {
+        console.log('Error fetching data from AsyncStorage:', error);
+        RNBootSplash.hide({fade: true});
       }
-    });
-    return () => {
-      subscription.remove();
     };
+    fetchData();
   }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Main behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <Component>
-          <StatusBar
-            barStyle={isAndroid ? 'dark-content' : 'light-content'}
-            backgroundColor={isAndroid ? 'white' : 'black'}
-          />
-          <Header />
-          <FlatList
-            data={taskList}
-            renderItem={({item}) => <Card data={item} />}
-            ListEmptyComponent={emptyData}
-          />
-          <FormTask addTask={addTask} />
-        </Component>
-      </Main>
-    </TouchableWithoutFeedback>
+    <ContextProvider.Provider value={Values}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Main behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <Component>
+            <StatusBar
+              barStyle={isAndroid ? 'dark-content' : 'light-content'}
+              backgroundColor={isAndroid ? 'white' : 'black'}
+            />
+            <Header />
+            <Navigator />
+          </Component>
+        </Main>
+      </TouchableWithoutFeedback>
+    </ContextProvider.Provider>
   );
 }
 

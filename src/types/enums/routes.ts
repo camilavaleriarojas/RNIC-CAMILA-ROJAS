@@ -1,0 +1,12 @@
+export enum Routes {
+  LIST = 'LIST',
+  EDIT_TASK = 'EDIT_TASK',
+  ADD_TASK = 'ADD_TASK',
+  TAB_NAVIGATOR = 'TAB_NAVIGATOR',
+  STACK = 'STACK',
+}
+
+export enum Keys {
+  TASKS_KEY = 'TASKS_KEY',
+  PERSISTENCE_KEY = 'PERSISTENCE_KEY',
+}
