@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import TabNavigator from './tab';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {Key} from '../types/interfaces/navigation';
 
 const Navigator = () => {
   const [isReady, setIsReady] = React.useState(false);
