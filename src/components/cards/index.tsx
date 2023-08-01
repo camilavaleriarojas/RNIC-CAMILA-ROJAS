@@ -14,6 +14,7 @@ const Card = (props: CardProps) => {
   const {taskList} = useContext(ContextProvider);
   const id = data.id;
   const selectedTask = taskList?.filter(item => item.id === id)[0];
+  console.log(selectedTask.todo);
 
   return (
     <TouchableOpacity
@@ -29,10 +30,10 @@ const Card = (props: CardProps) => {
         {img && <Image alt={title} source={img} />}
         <TouchableOpacity onPress={() => setTodo(!todo)}>
           <State>
-            {!todo ? (
-              <Check stroke={theme.disabled} />
-            ) : (
+            {!selectedTask.todo ? (
               <Check stroke={theme.enabled} />
+            ) : (
+              <Check stroke={theme.disabled} />
             )}
           </State>
         </TouchableOpacity>
