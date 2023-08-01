@@ -7,3 +7,7 @@ export type StackTabParams = {
   [Routes.EDIT_TASK]: undefined;
   [Routes.STACK]: undefined;
 };
+
+export enum Key {
+  NAVIGATION_STATE = 'NAVIGATION_STATE',
+}

@@ -5,7 +5,7 @@ export const Container = styled.View`
   display: flex;
   justify-content: center;
   height: 340px;
-  margin: 15px 30px 0 30px;
+  margin: 15px 20px 0 20px;
   border-radius: 40px;
   background-color: #fff;
 `;

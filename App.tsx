@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
-  AppState,
   StatusBar,
 } from 'react-native';
 import {tasks} from './src/constants/task';
@@ -42,17 +41,6 @@ function App(): JSX.Element {
     taskList,
     setTaskList,
   };
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'background') {
-        return setTaskList([]);
-      }
-    });
-    return () => {
-      subscription.remove();
-    };
-  }, []);
 
   return (
     <ContextProvider.Provider value={Values}>
